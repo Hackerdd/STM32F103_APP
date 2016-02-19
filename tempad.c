@@ -21,7 +21,7 @@
 //ADC1_BASE地址：0x4000 0000+0x2400 即ADC1的基地址，而她的规则数据寄存器的偏移地址是：0x4c
 #define ADC1_DR_Address    ((u32)0x4001244C)
 
-//__IO u16 ADC_ConvertedValue;
+__IO u16 Temp_ADC_ConvertedValue;
 //__IO u16 ADC_ConvertedValueLocal;
 
 
@@ -58,7 +58,7 @@ static void ADC1_Mode_Config(void)
 	/* DMA channel1 configuration */
 		   
   DMA_InitStructure.DMA_PeripheralBaseAddr = ADC1_DR_Address;		        // 外设基地址
-  DMA_InitStructure.DMA_MemoryBaseAddr = (u32)&ADC_ConvertedValue;	        // AD转换值所存放的内存基地址	（就是给个地址）
+  DMA_InitStructure.DMA_MemoryBaseAddr = (u32)&Temp_ADC_ConvertedValue;	        // AD转换值所存放的内存基地址	（就是给个地址）
   DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;                        // 外设作为数据传输的来源	
   DMA_InitStructure.DMA_BufferSize = 1;                                     // 定义指定DMA通道 DMA缓存的大小
   DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;          // 外设地址寄存器不变
