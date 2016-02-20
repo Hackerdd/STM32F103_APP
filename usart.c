@@ -4,7 +4,8 @@
 		
 		文件名称：usart.c
 		文件标识：
-		摘    要：默认USART1，若定义了SERIAL2，则为USART2
+		摘    要：执行USART_Config(9600)以初始化
+							默认USART1，若定义了SERIAL2，则为USART2
 							自由选择串口1/2
 		
 		当前版本：
@@ -68,6 +69,8 @@ void USART_Config(u16 BaudRate)
 	USART_ITConfig(SERIAL, USART_IT_RXNE, ENABLE);
 	
 	USART_Cmd(SERIAL, ENABLE);
+	
+	NVIC_Configuration();
 }
 
 
