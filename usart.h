@@ -28,7 +28,7 @@
 
 //默认USART1，若定义了SERIAL2，则为USART2
 //#define SERIAL1
-#define SERIAL2
+//#define SERIAL2
 
 #ifdef SERIAL2
 	#define Tx_Pin GPIO_Pin_2
