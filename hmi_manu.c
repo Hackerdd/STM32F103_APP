@@ -17,7 +17,7 @@
 ***/
 
 #include "hmi_manu.h"
-
+#include "dac.h"
 
 const u8 ON = 1;
 const u8 OFF = 0;
@@ -27,21 +27,39 @@ const u8 OFF = 0;
 		66   01   01   00   FF FF FF
 		ÃüÁî Ò³Âë ¿Ø¼þ ×´Ì¬
 ***/
-extern u8 buffer[5];
+extern u8 buffer[10];
 
 void hmi_led(void)
 {
 	static u8 i = 0;
+	static u16 dac_value = 0;
 	
-	if((buffer[0] == 0x65)&&(buffer[1] == 0x07)&&(buffer[2] == 0x05)&&(buffer[3] == 0x01)&&(i == 0))
+	if((buffer[0] == 0x65)&&(buffer[1] == 0x07)&&(buffer[2] == 0x01)&&(buffer[3] == 0x01)&&(i == 0))
 	{
-		led(ON);
+		if(dac_value < 2600)dac_value+=500;
+		Dac1_Set_Vol(dac_value);
+		HMI_Printf("n0.val=%d",dac_value);
+//		led(ON);
 		i = 1;
 	}
 		
+	if((buffer[0] == 0x65)&&(buffer[1] == 0x07)&&(buffer[2] == 0x01)&&(buffer[3] == 0x00)&&(i == 1))
+	{
+//		led(OFF);
+		i = 0;
+	}
+	
+	if((buffer[0] == 0x65)&&(buffer[1] == 0x07)&&(buffer[2] == 0x05)&&(buffer[3] == 0x01)&&(i == 0))
+	{
+		dac_value = 0;
+		Dac1_Set_Vol(dac_value);
+		HMI_Printf("n0.val=%d",dac_value);
+		i = 1;
+	}
+	
 	if((buffer[0] == 0x65)&&(buffer[1] == 0x07)&&(buffer[2] == 0x05)&&(buffer[3] == 0x00)&&(i == 1))
 	{
-		led(OFF);
+//		led(OFF);
 		i = 0;
 	}
 }

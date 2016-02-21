@@ -26,7 +26,6 @@
  * 输出  : 无
  * 调用  ：外部调用
  */
- 
 
 void USART_Config(u16 BaudRate)
 {
@@ -119,28 +118,28 @@ int fputc(int ch, FILE *f)
 /*  available peripheral interrupt handler's name please refer to the startup */
 /*  file (startup_stm32f10x_xx.s).                                            */
 /******************************************************************************/
-/*
-#ifdef SERIAL2
-void USART2_IRQHandler(void)
-#else
-void USART1_IRQHandler(void)
-#endif
-{
-	u8 c;
-	static u8 i = 0;
-	if(USART_GetITStatus(SERIAL, USART_IT_RXNE) != RESET)
-	{ 	
-//	  c=SERIAL->DR;
-		c = USART_ReceiveData(SERIAL);
-		
-//		if(c == 0x66)i = 0;							//识别起始标识0x66
-//		buffer[i++] = c;
-		
-		if(c != 0xFF)buffer[i++] = c;			//识别结束标识0xFF 0xFF 0xFF
-		else 					i = 0;
-	} 	 
-}
-*/
+
+//#ifdef SERIAL2
+//		void USART2_IRQHandler(void)
+//#else
+//		void USART1_IRQHandler(void)
+//#endif
+//{
+//	u8 c;
+//	static u8 i = 0;
+//	if(USART_GetITStatus(SERIAL, USART_IT_RXNE) != RESET)
+//	{ 	
+////	  c=SERIAL->DR;
+//		c = USART_ReceiveData(SERIAL);
+//		
+////		if(c == 0x66)i = 0;							//识别起始标识0x66
+////		buffer[i++] = c;
+//		
+//		if(c != 0xFF)buffer[i++] = c;			//识别结束标识0xFF 0xFF 0xFF
+//		else 					i = 0;
+//	} 	 
+//}
+
 
 /******************* (C) COPYRIGHT 2012 WildFire Team *****END OF FILE************/
 

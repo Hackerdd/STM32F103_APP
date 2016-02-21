@@ -19,8 +19,10 @@
 #include "hmi.h"
 //#include <stdbool.h>//里面定义了bool、true、false，让我们可以像C++一样的定义布尔类型。
 
-u8 buffer[5] = {0};
-
+/***
+		用于存放收到的指令
+***/
+u8 buffer[10] = {0};
 
 /***
 		HMI_Printf(String,Argument)
