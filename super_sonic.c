@@ -18,7 +18,7 @@
 ***/
 
 
-#include "pulse_capture.h"
+#include "super_sonic.h"
 
 _Pulse pulse;
 volatile u16 Speed = 0;
