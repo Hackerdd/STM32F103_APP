@@ -22,7 +22,7 @@
 /***
 		用于存放收到的指令
 ***/
-u8 buffer[10] = {0};
+extern u8 buffer[10];
 
 /***
 		HMI_Printf(String,Argument)
@@ -122,28 +122,6 @@ void HMISendb(u8 k)		         //字节发送函数
 
 	 } 
 } 
-
-
-#ifdef SERIAL2
-void USART2_IRQHandler(void)
-#else
-void USART1_IRQHandler(void)
-#endif
-{
-	u8 c;
-	static u8 i = 0;
-	if(USART_GetITStatus(SERIAL, USART_IT_RXNE) != RESET)
-	{ 	
-//	  c=SERIAL->DR;
-		c = USART_ReceiveData(SERIAL);
-		
-//		if(c == 0x66)i = 0;							//识别起始标识0x66
-//		buffer[i++] = c;
-		
-		if(c != 0xFF)buffer[i++] = c;			//识别结束标识0xFF 0xFF 0xFF
-		else 					i = 0;
-	} 	 
-}
 
 
 /**

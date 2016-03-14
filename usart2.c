@@ -17,7 +17,7 @@
 		完成日期：
 ***/
 
-#include "usart.h"
+#include "usart2.h"
 #include "misc.h"
 
 /***

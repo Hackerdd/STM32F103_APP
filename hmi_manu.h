@@ -67,6 +67,6 @@ typedef enum
 	cmd_Start_Success = 0x88,		//系统启动成功 
 }cmd;
 
-void hmi_led(void);
+void hmi_DAC(void);
 
 #endif

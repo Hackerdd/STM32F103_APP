@@ -4,7 +4,7 @@
 		
 		文件名称：servo.h
 		文件标识：
-		摘    要：Servo TIM3 A67,B01
+		摘    要：Servo TIM2 GPIO A0 A1 A2 A3
 		
 		
 		当前版本：
@@ -21,13 +21,15 @@
 
 #include "stm32f10x.h"
 
-void Servo_Write_Angle(u8 Angle);
-void Servo_Write_us(u16 us);
+#define PWM_Max 1998
+#define PWM_Min 1002
 
-void TIM3_GPIO_Config(void);
-void TIM3_Mode_Config(u16 CCR1_Val);
+void Servo_Write_Angle(float Angle[4]);
+void Servo_Write_us(u16 us[4]);
 
-void Servo_us_Init(u8 us);
-void Servo_Angle_Init(u8 Angle);
+void TIM2_GPIO_Config(void);
+void TIM2_Mode_Config(void);
+
+void Servo_Init(void);
 
 #endif /*__SERVO_H*/

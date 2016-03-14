@@ -23,23 +23,9 @@
 #include "stm32f10x.h"
 #include <stdio.h>
 
-//#ifndef SERIAL1 || SERIAL2
-//	#error Please define usart1 or usart2
-//#endif
-
-//默认USART1，若定义了SERIAL2，则为USART2
-//#define SERIAL1
-#define SERIAL2
-
-#ifdef SERIAL2
-	#define Tx_Pin GPIO_Pin_2
-	#define Rx_Pin GPIO_Pin_3
-	#define SERIAL USART2
-#else
-	#define Tx_Pin GPIO_Pin_9
-	#define Rx_Pin GPIO_Pin_10
-	#define SERIAL USART1
-#endif
+#define Tx_Pin GPIO_Pin_9
+#define Rx_Pin GPIO_Pin_10
+#define SERIAL USART1
 
 void USART_Config(u16 BaudRate);
 void NVIC_Configuration(void);

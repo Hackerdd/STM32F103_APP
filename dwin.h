@@ -21,6 +21,8 @@
 #include "stm32f10x.h"
 #include "usart.h"
 
+#define SERIAL2
+
 typedef enum
 {
 	WIDGET_HEAD1 = 0,

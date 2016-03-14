@@ -17,7 +17,6 @@
 ***/
 
 #include "hmi_manu.h"
-#include "dac.h"
 
 const u8 ON = 1;
 const u8 OFF = 0;
@@ -29,7 +28,7 @@ const u8 OFF = 0;
 ***/
 extern u8 buffer[10];
 
-void hmi_led(void)
+void hmi_DAC(void)
 {
 	static u8 i = 0;
 	static u16 dac_value = 0;
@@ -37,7 +36,7 @@ void hmi_led(void)
 	if((buffer[0] == 0x65)&&(buffer[1] == 0x07)&&(buffer[2] == 0x01)&&(buffer[3] == 0x01)&&(i == 0))
 	{
 		if(dac_value < 2600)dac_value+=500;
-		Dac1_Set_Vol(dac_value);
+		 
 		HMI_Printf("n0.val=%d",dac_value);
 //		led(ON);
 		i = 1;
@@ -52,7 +51,7 @@ void hmi_led(void)
 	if((buffer[0] == 0x65)&&(buffer[1] == 0x07)&&(buffer[2] == 0x05)&&(buffer[3] == 0x01)&&(i == 0))
 	{
 		dac_value = 0;
-		Dac1_Set_Vol(dac_value);
+		 
 		HMI_Printf("n0.val=%d",dac_value);
 		i = 1;
 	}

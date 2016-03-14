@@ -17,7 +17,7 @@
 		完成日期：
 ***/
 
-#include "usart.h"
+#include "usart1.h"
 #include "misc.h"
 
 /***
@@ -26,7 +26,7 @@
 u8 buffer[10] = {0};
 
 /*
- * 函数名：USART_Config
+ * 函数名：USART1_Config
  * 描述  ：USART1 GPIO 配置,工作模式配置
  * 输入  ：无
  * 输出  : 无
@@ -38,18 +38,17 @@ void USART_Config(u16 BaudRate)
 
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
-	
-		/* config USART1 clock */
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+		
+	/* config USART1 clock */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 | RCC_APB2Periph_GPIOA, ENABLE);
 		
 	/* USART1 GPIO config */
-	/* Configure USART1 Tx (PA.2) as alternate function push-pull */
+	/* Configure USART1 Tx (PA.9) as alternate function push-pull */
 	GPIO_InitStructure.GPIO_Pin = Tx_Pin;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);    
-	/* Configure USART1 Rx (PA.3) as input floating */
+	/* Configure USART1 Rx (PA.10) as input floating */
 	GPIO_InitStructure.GPIO_Pin = Rx_Pin;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
@@ -78,7 +77,7 @@ void NVIC_Configuration(void)
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
 	
 	/* Enable the USARTy Interrupt */
-	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
 	
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
@@ -90,7 +89,7 @@ void NVIC_Configuration(void)
 
 /*
  * 函数名：fputc,现已调用microlib，不需要了
- * 描述  ：重定向c库函数printf到USART1
+ * 描述  ：重定向c库函数printf到SERIAL
  * 输入  ：无
  * 输出  ：无
  * 调用  ：由printf调用
@@ -113,7 +112,8 @@ int fputc(int ch, FILE *f)
 /*  file (startup_stm32f10x_xx.s).                                            */
 /******************************************************************************/
 
-void USART2_IRQHandler(void)
+
+void USART1_IRQHandler(void)
 {
 	u8 c;
 	static u8 i = 0;
