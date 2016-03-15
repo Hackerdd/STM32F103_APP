@@ -23,15 +23,6 @@
 
 #define PWM_NUM    4
 
-typedef struct{
-				int16_t ROLL;
-				int16_t PITCH;
-				int16_t THROTTLE;
-				int16_t YAW;
-	      int16_t pitch_offset;
-	      int16_t roll_offset;
-	      int16_t yaw_offset;
-}T_RC_DATA;
 
 typedef struct
 {

@@ -20,8 +20,12 @@
 #include "pulse_capture.h"
 
 _Pulse pulse;
-T_RC_DATA Rc_Data;
-volatile u16 Speed = 0;
+
+u16 PWM_Value[4] = {0};
+#define PWM_Chanal1 PWM_Value[0]
+#define PWM_Chanal2 PWM_Value[1]
+#define PWM_Chanal3 PWM_Value[2]
+#define PWM_Chanal4 PWM_Value[3]
 
 u16 TIM4CH_CAPTURE_Rise[PWM_NUM];
 u16 TIM4CH_CAPTURE_Drop[PWM_NUM];
@@ -95,8 +99,8 @@ void TIM4_IRQHandler(void)
 			{
 				  TIM_OC1PolarityConfig(TIM4,TIM_ICPolarity_Rising); //CC1P=0 设置为上升沿捕获
           TIM4CH_CAPTURE_Drop[0]=TIM_GetCapture1(TIM4);
-				  if(TIM4CH_CAPTURE_Rise[0]>TIM4CH_CAPTURE_Drop[0])  Rc_Data.YAW = 65535-TIM4CH_CAPTURE_Rise[0] + TIM4CH_CAPTURE_Drop[0];
-					else 	                                             Rc_Data.YAW = TIM4CH_CAPTURE_Drop[0] - TIM4CH_CAPTURE_Rise[0];
+				  if(TIM4CH_CAPTURE_Rise[0]>TIM4CH_CAPTURE_Drop[0])  PWM_Chanal1 = 65535-TIM4CH_CAPTURE_Rise[0] + TIM4CH_CAPTURE_Drop[0];
+					else 	                                             PWM_Chanal1 = TIM4CH_CAPTURE_Drop[0] - TIM4CH_CAPTURE_Rise[0];
       }			
 		}	
 	 
@@ -112,8 +116,8 @@ void TIM4_IRQHandler(void)
 			{
 				  TIM_OC2PolarityConfig(TIM4,TIM_ICPolarity_Rising); //CC1P=0 设置为上升沿捕获
           TIM4CH_CAPTURE_Drop[1]=TIM_GetCapture2(TIM4);
-				  if(TIM4CH_CAPTURE_Rise[1]>TIM4CH_CAPTURE_Drop[1])  Rc_Data.THROTTLE = 65535-TIM4CH_CAPTURE_Rise[1] + TIM4CH_CAPTURE_Drop[1];
-					else 	                                             Rc_Data.THROTTLE = TIM4CH_CAPTURE_Drop[1] - TIM4CH_CAPTURE_Rise[1];
+				  if(TIM4CH_CAPTURE_Rise[1]>TIM4CH_CAPTURE_Drop[1])  PWM_Chanal2 = 65535-TIM4CH_CAPTURE_Rise[1] + TIM4CH_CAPTURE_Drop[1];
+					else 	                                             PWM_Chanal2 = TIM4CH_CAPTURE_Drop[1] - TIM4CH_CAPTURE_Rise[1];
       }	
 		}	
   	
@@ -129,8 +133,8 @@ void TIM4_IRQHandler(void)
 			{
 				  TIM_OC3PolarityConfig(TIM4,TIM_ICPolarity_Rising); //CC1P=0 设置为上升沿捕获
           TIM4CH_CAPTURE_Drop[2]=TIM_GetCapture3(TIM4);
-				  if(TIM4CH_CAPTURE_Rise[2]>TIM4CH_CAPTURE_Drop[2]) Rc_Data.PITCH = 65535-TIM4CH_CAPTURE_Rise[2] + TIM4CH_CAPTURE_Drop[2];
-					else 	                                            Rc_Data.PITCH = TIM4CH_CAPTURE_Drop[2] - TIM4CH_CAPTURE_Rise[2];
+				  if(TIM4CH_CAPTURE_Rise[2]>TIM4CH_CAPTURE_Drop[2]) PWM_Chanal3 = 65535-TIM4CH_CAPTURE_Rise[2] + TIM4CH_CAPTURE_Drop[2];
+					else 	                                            PWM_Chanal3 = TIM4CH_CAPTURE_Drop[2] - TIM4CH_CAPTURE_Rise[2];
       }	 
 		}	
 
@@ -146,8 +150,8 @@ void TIM4_IRQHandler(void)
 			{
 				  TIM_OC4PolarityConfig(TIM4,TIM_ICPolarity_Rising); //CC1P=0 设置为上升沿捕获
           TIM4CH_CAPTURE_Drop[3]=TIM_GetCapture4(TIM4);
-				  if(TIM4CH_CAPTURE_Rise[3]>TIM4CH_CAPTURE_Drop[3])  Rc_Data.ROLL = 65535-TIM4CH_CAPTURE_Rise[3] + TIM4CH_CAPTURE_Drop[3];
-					else 	                                             Rc_Data.ROLL = TIM4CH_CAPTURE_Drop[3] - TIM4CH_CAPTURE_Rise[3];
+				  if(TIM4CH_CAPTURE_Rise[3]>TIM4CH_CAPTURE_Drop[3])  PWM_Chanal4 = 65535-TIM4CH_CAPTURE_Rise[3] + TIM4CH_CAPTURE_Drop[3];
+					else 	                                             PWM_Chanal4 = TIM4CH_CAPTURE_Drop[3] - TIM4CH_CAPTURE_Rise[3];
       }	  
 		}	
 }
