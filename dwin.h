@@ -15,8 +15,8 @@
 		原作者  ：
 		完成日期：
 ***/
-#ifndef DWIN_H
-#define DWIN_H
+#ifndef __DWIN_H
+#define __DWIN_H
 
 #include "stm32f10x.h"
 #include "usart.h"
