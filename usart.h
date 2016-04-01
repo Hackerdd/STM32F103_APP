@@ -29,7 +29,7 @@
 
 //默认USART1，若定义了SERIAL2，则为USART2
 //#define SERIAL1
-#define SERIAL2
+// #define SERIAL2
 
 #ifdef SERIAL2
 	#define Tx_Pin GPIO_Pin_2
@@ -42,7 +42,7 @@
 #endif
 
 void USART_Config(u16 BaudRate);
-void NVIC_Configuration(void);
+void USART_NVIC_Configuration(void);
 //int fputc(int ch, FILE *f);
 
 #endif /* __USART_H */

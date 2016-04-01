@@ -26,7 +26,7 @@
 u8 buffer[10] = {0};
 
 /*
- * 函数名：USART_Config
+ * 函数名：USART1_Config
  * 描述  ：USART1 GPIO 配置,工作模式配置
  * 输入  ：无
  * 输出  : 无
@@ -39,9 +39,17 @@ void USART_Config(u16 BaudRate)
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 	
+#ifdef SERIAL2
 		/* config USART1 clock */
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+
+#else	
+	/* config USART1 clock */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 | RCC_APB2Periph_GPIOA, ENABLE);
+	
+#endif
+
 		
 	/* USART1 GPIO config */
 	/* Configure USART1 Tx (PA.2) as alternate function push-pull */
@@ -67,21 +75,25 @@ void USART_Config(u16 BaudRate)
 	
 	USART_Cmd(SERIAL, ENABLE);
 	
-	NVIC_Configuration();
+	USART_NVIC_Configuration();
 }
 
 
-void NVIC_Configuration(void)
+void USART_NVIC_Configuration(void)
 {
 	NVIC_InitTypeDef NVIC_InitStructure; 
 	/* Configure the NVIC Preemption Priority Bits */  
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
 	
 	/* Enable the USARTy Interrupt */
+#ifdef SERIAL2
 	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+#else
+	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+#endif
 	
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 }
@@ -113,7 +125,11 @@ int fputc(int ch, FILE *f)
 /*  file (startup_stm32f10x_xx.s).                                            */
 /******************************************************************************/
 
-void USART2_IRQHandler(void)
+#ifdef SERIAL2
+		void USART2_IRQHandler(void)
+#else
+		void USART1_IRQHandler(void)
+#endif
 {
 	u8 c;
 	static u8 i = 0;
